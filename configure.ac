@@ -24,6 +24,18 @@ AC_CONFIG_HEADERS(src/config.h)
 
 AM_INIT_AUTOMAKE([1.9.6 -Wall])
 
+# Checks for host ---
+AC_CANONICAL_HOST
+case "$host" in
+*-*-mingw*)
+	os_win32=yes
+	;;
+*)
+	os_win32=no
+	;;
+esac
+AM_CONDITIONAL(OS_WIN32, [test "x$os_win32" = "xyes"])
+
 # Check for Win32
 AC_CANONICAL_HOST
 case "$host" in
@@ -61,7 +73,8 @@ AS_IF([test "x$have_xpyb" = "xyes"],
       [AC_DEFINE([HAVE_XPYB], [1], [Define to 1 if xpyb is available])])
 
 # Checks for header files ---
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
+AM_CHECK_PYTHON_HEADERS(, AC_MSG_ERROR([Python headers not found]))
+AM_CHECK_PYTHON_LIBS(, AC_MSG_ERROR([Python libs not found]))
 
 # checks for types and compilers ---
 AC_C_CONST
