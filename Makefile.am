@@ -1,3 +1,4 @@
+ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 SUBDIRS = src examples test doc
 
 EXTRA_DIST = \

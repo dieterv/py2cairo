@@ -24,10 +24,17 @@ AC_CONFIG_HEADERS(src/config.h)
 
 AM_INIT_AUTOMAKE([1.9.6 -Wall])
 
-# Options ---
-
-# put the ACLOCAL flags in the makefile
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+# Check for Win32
+AC_CANONICAL_HOST
+case "$host" in
+*-*-mingw*)
+	os_win32=yes
+	;;
+*)
+	os_win32=no
+	;;
+esac
+AM_CONDITIONAL(OS_WIN32, test x"$os_win32" = "xyes")
 
 # Checks for programs ---
 AC_DISABLE_STATIC
